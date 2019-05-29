@@ -18,10 +18,6 @@ class Conversation {
     this.isMute: false,
     this.unreadMsgCount: 0,
   });
-
-  bool isAvatarFromNet() {
-    return this.avatar.indexOf('http') == 0 || this.avatar.indexOf('https') == 0;
-  }
 }
 
 

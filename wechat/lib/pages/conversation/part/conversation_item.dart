@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import 'package:wechat/utils/utils.dart';
 import 'package:wechat/constants.dart';
 import 'package:wechat/model/conversation.dart';
 
@@ -9,9 +10,10 @@ class ConversationItem extends StatelessWidget {
 
   const ConversationItem({Key key, @required this.conversation});
 
+  // 用户头像
   _buildAvatar() {
     Widget avatar;
-    if (conversation.isAvatarFromNet()) {
+    if (isAvatarFromNet(conversation.avatar)) {
       avatar = CachedNetworkImage(
         imageUrl: conversation.avatar,
         placeholder: Constants.ConversationAvatarDefaultIocn,
@@ -52,6 +54,7 @@ class ConversationItem extends StatelessWidget {
     );
   }
 
+  // 静音 icon
   _buildMuteIcon() {
     return Container(
       margin: const EdgeInsets.only(top: 10.0),
