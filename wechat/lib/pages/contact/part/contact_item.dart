@@ -34,13 +34,13 @@ class ContactItem extends StatelessWidget {
         imageUrl: this.avatar,
         placeholder: Constants.ContactAvatarDefaultIocn,
         width: Constants.ContactAvatarSize,
-        height: Constants.ConversationAvatarSize,
+        height: Constants.ContactAvatarSize,
       );
     } else {
       return Image.asset(
         this.avatar,
         width: Constants.ContactAvatarSize,
-        height: Constants.ConversationAvatarSize,
+        height: Constants.ContactAvatarSize,
       );
     }
   }
