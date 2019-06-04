@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:juejin/services/api.dart';
-
 class MinePage extends StatelessWidget {
 
   final BorderSide _borderSize = BorderSide(width: 1, color: Color.fromRGBO(215, 217, 220, 1));

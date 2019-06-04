@@ -26,6 +26,8 @@ dependencies:
 
   # http
   dio: 2.1.0
+  # loading
+  flutter_spinkit: "^3.1.0"
 
 dev_dependencies:
   flutter_test:
