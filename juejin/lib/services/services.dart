@@ -15,17 +15,18 @@ const httpHeader = {
   'X-Juejin-Uid': '',
 };
 
-var dio = Dio(BaseOptions(
-  headers: httpHeader,
-));
+var dio = Dio();
 
-Future<T> httpGet<T>(String path, [Map<String, dynamic> params]) async {
+Future<T> httpGet<T>(String path, {Map<String, dynamic> params, Map<String, dynamic> headers}) async {
   try {
     final resp = await dio.get<T>(
       path,
       queryParameters: params,
+      options: Options(
+        headers: headers,
+      ),
     );
-    
+    // print({path: path, params: params});
     return resp.data;
   } catch (e) {
     print({'path': path, 'params': params, 'err': e});

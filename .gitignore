@@ -26,6 +26,8 @@
 .pub-cache/
 .pub/
 wechat/build/
+juejin/build/
+baixing/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar

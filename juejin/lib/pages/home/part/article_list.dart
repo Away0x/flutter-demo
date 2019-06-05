@@ -21,7 +21,15 @@ class _ArticleListState extends State<ArticleList> {
       margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.only(top: 10, bottom: 10),
       color: Colors.white,
-      child: Text('aa'),
+      child: FlatButton(
+        padding: EdgeInsets.all(0),
+        child: Column(
+          children: <Widget>[
+            Text(articleData['title']),
+          ],
+        ),
+        onPressed: () {},
+      ),
     );
   }
 
@@ -40,7 +48,7 @@ class _ArticleListState extends State<ArticleList> {
         // 加载完成
         if (snapshot.connectionState == ConnectionState.done) {
           List<dynamic> data = snapshot.data;
-          print(data);
+
           // 没有数据
           if (!snapshot.hasData || snapshot.hasError || data == null || (data.length < 1)) {
             var msg = snapshot.error == null ? '暂无数据' : snapshot.error.toString();
