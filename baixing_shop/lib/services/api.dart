@@ -13,3 +13,16 @@ Future getHomeData() async {
 
   return resource;
 }
+
+// 获取首页热卖商品
+Future getHotGoodsData({int page = 1}) async {
+  var resource = await httpPOST('wxmini/homePageBelowConten', data: {
+    'page': page,
+  });
+
+  if (resource['code'] == '0') {
+    return resource['data'];
+  }
+
+  return resource;
+}

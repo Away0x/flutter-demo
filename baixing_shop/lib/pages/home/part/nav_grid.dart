@@ -32,6 +32,7 @@ class NavGrid extends StatelessWidget {
       height: ScreenUtil.getInstance().setHeight(270),
       padding: EdgeInsets.all(3),
       child: GridView.count(
+        physics: NeverScrollableScrollPhysics(), // Grid view 禁止滚动
         crossAxisCount: 5,
         padding: EdgeInsets.all(4),
         children: navList.map((item) {
