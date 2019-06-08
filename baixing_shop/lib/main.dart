@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 
 import './pages/index/index.dart';
 
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    debugPaintSizeEnabled = true;
+    // debugPaintSizeEnabled = true;
 
     return Container(
       child: MaterialApp(

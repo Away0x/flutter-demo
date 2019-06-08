@@ -26,3 +26,14 @@ Future getHotGoodsData({int page = 1}) async {
 
   return resource;
 }
+
+// 获取商品分类
+Future getCategory() async {
+  var resource = await httpPOST('wxmini/getCategory');
+
+  if (resource['code'] == '0') {
+    return resource['data'];
+  }
+
+  return resource;
+}
