@@ -28,6 +28,7 @@
 wechat/build/
 juejin/build/
 baixing/build/
+ctrip/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar
