@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter/rendering.dart';
 
+import './provide/child_category.dart';
 import './pages/index/index.dart';
 
-void main() => runApp(MyApp());
+void main() {
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,14 +16,19 @@ class MyApp extends StatelessWidget {
 
     // debugPaintSizeEnabled = true;
 
-    return Container(
-      child: MaterialApp(
-        title: '百姓生活+',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.pink,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (_) => ChildCategory()),
+      ],
+      child: Container(
+        child: MaterialApp(
+          title: '百姓生活+',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.pink,
+          ),
+          home: IndexPage(),
         ),
-        home: IndexPage(),
       ),
     );
   }
