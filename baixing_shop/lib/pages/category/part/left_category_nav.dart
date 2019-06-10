@@ -31,9 +31,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       list = data.data;
     });
 
-    if (list[0].bxMallSubDto.length != 0) {
-      Provider.of<ChildCategory>(context).getChildCategory(list[0].bxMallSubDto);
-    }
+    Provider.of<ChildCategory>(context).getChildCategory(list[0].bxMallSubDto ?? [], list[0].mallCategoryID);
   }
 
   Widget _buildLeftInkWell(int index) {
@@ -59,9 +57,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
           listIndex = index;
         });
 
-        List childList = item.bxMallSubDto;
-
-        Provider.of<ChildCategory>(context).getChildCategory(childList);
+        Provider.of<ChildCategory>(context).getChildCategory(item.bxMallSubDto, item.mallCategoryID);
       },
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './part/left_category_nav.dart';
 import './part/right_category_nav.dart';
+import './part/goods_list.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _CategoryPageState extends State<CategoryPage> {
             Column(
               children: <Widget>[
                 RightCategoryNav(),
+                GoodsList(),
               ],
             ),
           ],

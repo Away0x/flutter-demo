@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 // import 'package:flutter/rendering.dart';
 
 import './provide/child_category.dart';
+import './provide/category_goods_list.dart';
 import './pages/index/index.dart';
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(builder: (_) => ChildCategory()),
+        ChangeNotifierProvider(builder: (_) => CategoryGoodsListProvide()),
       ],
       child: Container(
         child: MaterialApp(
