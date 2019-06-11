@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:baixing_shop/provide/detail.dart';
+import 'package:baixing_shop/services/api.dart';
+import 'package:baixing_shop/model/detail.dart';
 
-class DetailPage extends StatelessWidget {
+import './constants.dart';
 
+import './part/top_area.dart';
+import './part/explain.dart';
+import './part/tabbar.dart';
+import './part/content.dart';
+import './part/bottom.dart';
+
+class DetailPage extends StatefulWidget {
+  
   final String goodsId;
-
+  
   DetailPage(this.goodsId);
 
-  Future<String> _getDetail(BuildContext context) async {
-    await Provider.of<DetailProvide>(context).fetchGoodDetail(goodsId);
-    return '完成加载';
-  }
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  TabIndex currentTabIndex = TabIndex.LEFT;
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +37,39 @@ class DetailPage extends StatelessWidget {
         title: Text('商品详情'),
       ),
       body: FutureBuilder(
-        future: _getDetail(context),
+        future: getGoodDetail(widget.goodsId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Container(
-              child: Column(
-                children: <Widget>[
+            var data = DetailsGoodsData.fromJson(snapshot.data);
 
-                ],
-              ),
+            return Stack(
+              children: <Widget>[
+                ListView(
+                  children: <Widget>[
+                    DetailTopArea(data),
+                    SizedBox(height: 10),
+                    DetailExplain(),
+                    SizedBox(height: 10),
+                    DetailTabbar(
+                      currentIndex: currentTabIndex,
+                      clickTabCallBack: (index) {
+                        setState(() {
+                          currentTabIndex = index;
+                        });
+                      },
+                    ),
+                    DetailContent(currentTabIndex: currentTabIndex, content: data.goodInfo?.goodsDetail),
+                  ],
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: DetailBottom(),
+                ),
+              ],
             );
           } else {
-            return Text('加载中 $goodsId');
+            return Text('加载中 ${widget.goodsId}');
           }
         },
       ),

@@ -40,6 +40,10 @@ dependencies:
   fluttertoast: ^3.0.1
   # 路由
   fluro: ^1.4.0
+  # html 解析
+  flutter_html: ^0.9.6
+  # 本地存储
+  shared_preferences: ^0.5.1
 
 dev_dependencies:
   flutter_test:
