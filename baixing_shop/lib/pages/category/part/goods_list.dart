@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:baixing_shop/application.dart';
+import 'package:baixing_shop/router/router.dart';
+
 import 'package:baixing_shop/provide/category_goods_list.dart';
 import 'package:baixing_shop/provide/child_category.dart';
 import 'package:baixing_shop/model/category_goods_list_model.dart';
@@ -73,7 +76,9 @@ class _GoodsListState extends State<GoodsList> {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        Application.router.navigateTo(context, '${MyRouter.detailPage}?id=${item.goodsId}');
+      },
     );
   }
 
