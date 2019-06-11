@@ -26,12 +26,13 @@ Future<T> httpGET<T>(String path, {params}) async {
 Future<T> httpPOST<T>(String path, {data}) async {
   try {
     Response resp = await dio.post(API_ROOT + path, data: data);
+    // print(path);
+    // print(data);
 
     if (resp.statusCode == 200) {
       var data = json.decode(resp.data.toString());
       return data;
     }
-    print(resp.statusCode);
     
     throw Exception('$path 网络错误');
   } catch (e) {

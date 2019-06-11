@@ -8,14 +8,11 @@ import 'package:baixing_shop/provide/child_category.dart';
 import 'package:baixing_shop/provide/category_goods_list.dart';
 import 'package:baixing_shop/services/api.dart';
 
-class RightCategoryNav extends StatefulWidget {
-  @override
-  _RightCategoryNavState createState() => _RightCategoryNavState();
-}
+import '../utils/utils.dart';
 
-class _RightCategoryNavState extends State<RightCategoryNav> {
+class RightCategoryNav extends StatelessWidget {
 
-  Widget _buildRightInkWell(BxMallSubDto item) {
+  Widget _buildRightInkWell(BuildContext context, BxMallSubDto item) {
     String curSubID = Provider.of<ChildCategory>(context).subId;
 
     return InkWell(
@@ -31,32 +28,13 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
       ),
       onTap: () {
         Provider.of<ChildCategory>(context).selectSubCategory(item.mallSubId);
-        _getGoodsList();
+        _getGoodsList(context);
       },
     );
   }
 
-  void _getGoodsList() {
-    var childCatProvider = Provider.of<ChildCategory>(context);
-
-    getMallGoods(
-      categoryId: childCatProvider.categoryId,
-      categorySubId: childCatProvider.subId,
-      page: 1,
-    ).then((val) {
-      var provider = Provider.of<CategoryGoodsListProvide>(context);
-
-      if (val == null) {
-        provider.getGoodsList([]);
-        return;
-      }
-
-      List<CategoryListData> goodList = (val as List).map((v) {
-        return CategoryListData.fromJson(v);
-      }).toList();
-      
-      provider.getGoodsList(goodList);
-    });
+  void _getGoodsList(BuildContext context) {
+    getMallGoodsUtil(context);
   }
 
   @override
@@ -74,7 +52,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
         scrollDirection: Axis.horizontal,
         itemCount: list.length,
         itemBuilder: (context, index) {
-          return _buildRightInkWell(list[index]);
+          return _buildRightInkWell(context, list[index]);
         },
       ),
     );

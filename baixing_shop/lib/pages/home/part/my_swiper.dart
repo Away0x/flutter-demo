@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:baixing_shop/router/router.dart';
+import 'package:baixing_shop/application.dart';
+
 class MySwiper extends StatelessWidget {
 
   final List swiperData;
@@ -19,7 +22,14 @@ class MySwiper extends StatelessWidget {
         autoplay: true,
         itemCount: swiperData.length,
         itemBuilder: (context, index) {
-          return Image.network("${swiperData[index]['image']}", fit: BoxFit.fill,);
+          var item = swiperData[index];
+
+          return InkWell(
+            child: Image.network("${swiperData[index]['image']}", fit: BoxFit.fill),
+            onTap: () {
+              Application.router.navigateTo(context, '${MyRouter.detailPage}?id=${item['goodsId']}');
+            },
+          );
         },
       ),
     );

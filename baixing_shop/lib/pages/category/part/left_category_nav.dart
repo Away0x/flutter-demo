@@ -7,6 +7,8 @@ import 'package:baixing_shop/model/category_big_list_model.dart';
 import 'package:baixing_shop/model/category_big_model.dart';
 import 'package:baixing_shop/provide/child_category.dart';
 
+import '../utils/utils.dart';
+
 class LeftCategoryNav extends StatefulWidget {
   @override
   _LeftCategoryNavState createState() => _LeftCategoryNavState();
@@ -32,6 +34,9 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     });
 
     Provider.of<ChildCategory>(context).getChildCategory(list[0].bxMallSubDto ?? [], list[0].mallCategoryID);
+    // 默认全部
+    Provider.of<ChildCategory>(context).selectSubCategory(''); // '' 表示获取全部商品的 goods list
+    getMallGoodsUtil(context);
   }
 
   Widget _buildLeftInkWell(int index) {
@@ -58,6 +63,9 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
         });
 
         Provider.of<ChildCategory>(context).getChildCategory(item.bxMallSubDto, item.mallCategoryID);
+        // 默认全部
+        Provider.of<ChildCategory>(context).selectSubCategory(''); // '' 表示获取全部商品的 goods list
+        getMallGoodsUtil(context);
       },
     );
   }

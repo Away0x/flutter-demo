@@ -14,10 +14,16 @@ class ChildCategory with ChangeNotifier {
   List<BxMallSubDto> childCategoryList = [];
   String categoryId = '4'; // 大类 id
   String subId = ''; // 小类 id
+  int page = 1; // 列表页数
+  String noMoreText = ''; // 显示更多的标识
 
-  _reset() {
-    childCategoryList = [all];
+  _reset({bool resetCat = true}) {
+    if (resetCat) {
+      childCategoryList = [all];
+    }
     subId = '';
+    page = 1;
+    noMoreText = '';
   }
 
   getChildCategory(List<BxMallSubDto> list, String categoryid) {
@@ -30,7 +36,18 @@ class ChildCategory with ChangeNotifier {
 
   // 选择了子类
   selectSubCategory(String subid) {
+    _reset(resetCat: false);
     subId = subid;
+    notifyListeners();
+  }
+
+  addPage() {
+    page++;
+    notifyListeners();
+  }
+
+  changeNoMoreText(String text) {
+    noMoreText = text;
     notifyListeners();
   }
 

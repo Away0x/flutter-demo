@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:baixing_shop/provide/category_goods_list.dart';
+import 'package:baixing_shop/provide/child_category.dart';
 import 'package:baixing_shop/model/category_goods_list_model.dart';
+
+import '../utils/utils.dart';
 
 class GoodsList extends StatefulWidget {
   @override
@@ -12,7 +17,8 @@ class GoodsList extends StatefulWidget {
 
 class _GoodsListState extends State<GoodsList> {
 
-
+  GlobalKey<RefreshFooterState> _footerKey = GlobalKey<RefreshFooterState>();
+  ScrollController _scrollController = ScrollController();
 
   Widget _buildGoodImage(String imgPath) {
     return Container(
@@ -71,8 +77,31 @@ class _GoodsListState extends State<GoodsList> {
     );
   }
 
+  _getMoreListData() async {
+    Provider.of<ChildCategory>(context).addPage();
+    var list = await getMallGoodsUtil(context, true);
+    
+    // print(list.map((v) => v.toJson()).toList());
+    if (list.length == 0) {
+      Fluttertoast.showToast(
+        msg: '已经到底了',
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.pink,
+        textColor: Colors.white,
+        fontSize: 16,
+      );
+      Provider.of<ChildCategory>(context).changeNoMoreText('没有更多了');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    try {
+      if (Provider.of<ChildCategory>(context).page == 1) {
+        _scrollController.jumpTo(0);
+      }
+    } catch(e) {}
+
     List<CategoryListData> list = Provider.of<CategoryGoodsListProvide>(context).goodList;
 
     if (list.length == 0) {
@@ -82,12 +111,28 @@ class _GoodsListState extends State<GoodsList> {
     return Expanded(
       child: Container(
         width: ScreenUtil.getInstance().setWidth(570),
-        child: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return _buildItem(list[index]);
-        },
-      ),
+        child: EasyRefresh(
+          refreshFooter: ClassicsFooter(
+            key: _footerKey,
+            bgColor: Colors.white,
+            textColor: Colors.pink,
+            moreInfoColor: Colors.pink,
+            showMore: true,
+            noMoreText: Provider.of<ChildCategory>(context).noMoreText,
+            moreInfo: '加载中',
+            loadReadyText: '上拉加载',
+          ),
+          loadMore: () async {
+            _getMoreListData();
+          },
+          child: ListView.builder(
+            controller: _scrollController,
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return _buildItem(list[index]);
+            },
+          ),
+        ),
       ),
     );
   }

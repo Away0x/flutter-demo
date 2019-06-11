@@ -45,3 +45,12 @@ Future getMallGoods({String categoryId, String categorySubId = '', int page = 1}
 
   return _resolveResp(resource);
 }
+
+// 获取商品详情
+Future getGoodDetail(String id) async {
+  var resource = await httpPOST('wxmini/getGoodDetailById', data: {
+    'goodId': id,
+  });
+
+  return _resolveResp(resource);
+}

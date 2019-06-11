@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:baixing_shop/router/router.dart';
+import 'package:baixing_shop/application.dart';
+
 class Recommend extends StatelessWidget {
 
   final List recommendList;
@@ -20,7 +23,7 @@ class Recommend extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(int index) {
+  Widget _buildItem(BuildContext context, int index) {
     return InkWell(
       child: Container(
         height: ScreenUtil.getInstance().setHeight(330),
@@ -41,18 +44,21 @@ class Recommend extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        var item = recommendList[index];
+        Application.router.navigateTo(context, '${MyRouter.detailPage}?id=${item['goodsId']}');
+      },
     );
   }
 
-  Widget _buildRecommendList() {
+  Widget _buildRecommendList(BuildContext context) {
     return Container(
       height: ScreenUtil.getInstance().setHeight(330),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
         itemBuilder: (context, index) {
-          return _buildItem(index);
+          return _buildItem(context, index);
         },
       ),
     );
@@ -66,7 +72,7 @@ class Recommend extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _buildTitle(),
-          _buildRecommendList(),
+          _buildRecommendList(context),
         ],
       ),
     );

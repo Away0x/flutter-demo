@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fluro/fluro.dart';
 // import 'package:flutter/rendering.dart';
 
-import './provide/child_category.dart';
-import './provide/category_goods_list.dart';
-import './pages/index/index.dart';
+import 'package:baixing_shop/provide/child_category.dart';
+import 'package:baixing_shop/provide/category_goods_list.dart';
+import 'package:baixing_shop/pages/index/index.dart';
+import 'package:baixing_shop/router/router.dart';
+import 'package:baixing_shop/application.dart';
 
 void main() {
 
@@ -17,6 +20,10 @@ class MyApp extends StatelessWidget {
 
     // debugPaintSizeEnabled = true;
 
+    final router = Router();
+    MyRouter.configureRoutes(router);
+    Application.router = router;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(builder: (_) => ChildCategory()),
@@ -26,6 +33,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: '百姓生活+',
           debugShowCheckedModeBanner: false,
+          onGenerateRoute: Application.router.generator,
           theme: ThemeData(
             primaryColor: Colors.pink,
           ),

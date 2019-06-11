@@ -36,6 +36,10 @@ dependencies:
   flutter_easyrefresh: ^1.2.7
   # 状态管理
   provider: ^3.0.0
+  # toast
+  fluttertoast: ^3.0.1
+  # 路由
+  fluro: ^1.4.0
 
 dev_dependencies:
   flutter_test:

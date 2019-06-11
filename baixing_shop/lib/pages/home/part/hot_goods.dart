@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:baixing_shop/application.dart';
+
 class HotGoods extends StatelessWidget {
 
   final List<Map> hotGoodsList;
@@ -20,7 +22,7 @@ class HotGoods extends StatelessWidget {
     );
   }
 
-  Widget _buildList() {
+  Widget _buildList(BuildContext context) {
     if (hotGoodsList.length == 0) {
       return Text(' ');
     }
@@ -53,6 +55,9 @@ class HotGoods extends StatelessWidget {
               ],
             ),
           ),
+          onTap: () {
+            Application.router.navigateTo(context, '/detail?id=${val['goodsId']}');
+          },
         );
       }).toList(),
     );
@@ -64,7 +69,7 @@ class HotGoods extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _buildTitle(),
-          _buildList(),
+          _buildList(context),
         ],
       ),
     );
