@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter/rendering.dart';
+
+import 'package:baixing_shop/provide/child_category.dart';
+import 'package:baixing_shop/provide/category_goods_list.dart';
+import 'package:baixing_shop/provide/cart.dart';
+import 'package:baixing_shop/provide/tab_index.dart';
 
 import 'package:baixing_shop/pages/index/index.dart';
 import 'package:baixing_shop/router/router.dart';
@@ -21,14 +27,22 @@ class MyApp extends StatelessWidget {
     MyRouter.configureRoutes(router);
     Application.router = router;
 
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (_) => TabIndexProvide()),
+        ChangeNotifierProvider(builder: (_) => ChildCategory()),
+        ChangeNotifierProvider(builder: (_) => CategoryGoodsListProvide()),
+        ChangeNotifierProvider(builder: (_) => CartProvider()),
+      ],
+      child: MaterialApp(
       title: '百姓生活+',
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: Application.router.generator,
-      theme: ThemeData(
-        primaryColor: Colors.pink,
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: Application.router.generator,
+        theme: ThemeData(
+          primaryColor: Colors.pink,
+        ),
+        home: IndexPage(),
       ),
-      home: IndexPage(),
     );
   }
 }

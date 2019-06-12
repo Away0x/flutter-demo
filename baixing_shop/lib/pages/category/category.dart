@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:baixing_shop/provide/child_category.dart';
-import 'package:baixing_shop/provide/category_goods_list.dart';
 
 import './part/left_category_nav.dart';
 import './part/right_category_nav.dart';
@@ -16,25 +12,19 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(builder: (_) => ChildCategory()),
-        ChangeNotifierProvider(builder: (_) => CategoryGoodsListProvide()),
-      ],
-      child: Scaffold(
-        appBar: AppBar(title: Text('商品分类')),
-        body: Container(
-          child: Row(
-            children: <Widget>[
-              LeftCategoryNav(),
-              Column(
-                children: <Widget>[
-                  RightCategoryNav(),
-                  GoodsList(),
-                ],
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(title: Text('商品分类')),
+      body: Container(
+        child: Row(
+          children: <Widget>[
+            LeftCategoryNav(),
+            Column(
+              children: <Widget>[
+                RightCategoryNav(),
+                GoodsList(),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
-import '../home/home.dart';
-import '../category/category.dart';
-import '../cart/cart.dart';
-import '../member/member.dart';
+import 'package:baixing_shop/provide/tab_index.dart';
 
-class IndexPage extends StatefulWidget {
-  @override
-  _IndexPageState createState() => _IndexPageState();
-}
+import 'package:baixing_shop/pages/home/home.dart';
+import 'package:baixing_shop/pages/category/category.dart';
+import 'package:baixing_shop/pages/cart/cart.dart';
+import 'package:baixing_shop/pages/member/member.dart';
 
-class _IndexPageState extends State<IndexPage> {
-   
+class IndexPage extends StatelessWidget {
+
   final List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), title: Text('首页')),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), title: Text('分类')),
@@ -27,27 +25,11 @@ class _IndexPageState extends State<IndexPage> {
     MemberPage(),
   ];
 
-  int currentIndex = 0;
-  var currentPage;
-  PageController _pageController;
-
-  @override
-  void initState() {
-    currentPage = tabBodies[currentIndex];
-    _pageController = PageController();
-      // ..addListener(() {
-      //   if (currentPage != _pageController.page.round()) {
-      //     setState(() {
-      //       currentPage = _pageController.page.round();
-      //     });
-      //   }
-      // });
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<TabIndexProvide>(context);
+    var currentIndex = provider.currentTabIndex;
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 245, 1),
       bottomNavigationBar: BottomNavigationBar(
@@ -55,10 +37,7 @@ class _IndexPageState extends State<IndexPage> {
         currentIndex: currentIndex,
         items: bottomTabs,
         onTap: (index) {
-          setState(() {
-            currentIndex = index;
-            // currentPage = tabBodies[currentIndex];
-          });
+          provider.changeTabIndex(index);
         },
       ),
       body: IndexedStack(

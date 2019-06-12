@@ -44,6 +44,8 @@ dependencies:
   flutter_html: ^0.9.6
   # 本地存储
   shared_preferences: ^0.5.1
+  # alert
+  rflutter_alert: ^1.0.2
 
 dev_dependencies:
   flutter_test:

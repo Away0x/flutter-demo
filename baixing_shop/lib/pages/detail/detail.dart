@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:baixing_shop/services/api.dart';
 import 'package:baixing_shop/model/detail.dart';
@@ -64,12 +65,15 @@ class _DetailPageState extends State<DetailPage> {
                 Positioned(
                   bottom: 0,
                   left: 0,
-                  child: DetailBottom(),
+                  child: DetailBottom(data.goodInfo),
                 ),
               ],
             );
           } else {
-            return Text('加载中 ${widget.goodsId}');
+            // return Text('加载中 ${widget.goodsId}');
+            return Center(
+              child: CupertinoActivityIndicator(),
+            );
           }
         },
       ),
