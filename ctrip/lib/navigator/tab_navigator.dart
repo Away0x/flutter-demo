@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:ctrip/pages/home_page.dart';
-import 'package:ctrip/pages/my_page.dart';
-import 'package:ctrip/pages/search_page.dart';
-import 'package:ctrip/pages/travel_page.dart';
+import 'package:ctrip/pages/home/home_page.dart';
+import 'package:ctrip/pages/my/my_page.dart';
+import 'package:ctrip/pages/search/search_page.dart';
+import 'package:ctrip/pages/travel/travel_page.dart';
 
 class TabNavigator extends StatefulWidget {
   @override
@@ -23,6 +23,11 @@ class _TabNavigatorState extends State<TabNavigator> {
   // other
   final _defaultColor = Colors.grey;
   final _activeColor = Colors.blue;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   BottomNavigationBarItem _buildBottomBar(int index) {
     return BottomNavigationBarItem(
@@ -51,6 +56,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         },
       ),
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _controller,
         children: <Widget>[
           HomePage(),
