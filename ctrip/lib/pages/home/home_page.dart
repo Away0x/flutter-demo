@@ -10,6 +10,7 @@ import 'package:ctrip/model/sales_box_model.dart';
 import 'package:ctrip/dao/home_dao.dart';
 
 import 'package:ctrip/components/loading_container.dart';
+import 'package:ctrip/components/search_bar.dart';
 
 import './part/top_swiper.dart';
 import './part/grid_nav.dart';
@@ -18,6 +19,7 @@ import './part/sub_nav.dart';
 import './part/sales_box.dart';
 
 const APPBAR_SCROLL_OFFSET = 100; // 页面滚动大于该值时，appbar opcity 为 1
+const SEARCH_BAR_DEFAULT_TEXT = '网红打卡地 景点 酒店 美食';
 
 class HomePage extends StatefulWidget {
   @override
@@ -38,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    print("home page load");
     loadData();
   }
 
@@ -80,15 +83,42 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget get _appBar {
-    return Opacity(
-      opacity: _appBarAlpha,
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(color: Colors.white),
-        child: Center(
-          child: Padding(padding: EdgeInsets.only(top: 20), child: Text('首页')),
+    var searchBar = SearchBar(
+      searchBarType: _appBarAlpha > 0.2 ? SearchBarType.homeLight : SearchBarType.home,
+      defaultText: SEARCH_BAR_DEFAULT_TEXT,
+      inputBoxClick: _jumpToSearch,
+      speakClick: _jumpToSpeak,
+      leftButtonClick: () {},
+    );
+
+    return Column(
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              // appbar 渐变遮罩背景
+              colors: [Color(0x66000000), Colors.transparent],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            )
+          ),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            height: 80,
+            decoration: BoxDecoration(
+              color: Color.fromARGB((_appBarAlpha * 255).toInt(), 255, 255, 255),
+            ),
+            child: searchBar,
+          ),
         ),
-      ),
+        // 阴影
+        Container(
+          height: _appBarAlpha > 0.2 ? 1 : 0,
+          decoration: BoxDecoration(
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 1)],
+          ),
+        ),
+      ],
     );
   }
 
@@ -108,6 +138,14 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  _jumpToSearch() {
+    
+  }
+
+  _jumpToSpeak() {
+
   }
 
   @override
