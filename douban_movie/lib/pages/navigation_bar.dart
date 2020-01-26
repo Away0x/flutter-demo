@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:douban_movie/pages/home/home_page.dart';
 import 'package:douban_movie/pages/person/person_page.dart';
+import 'package:douban_movie/utils/screen.dart';
 
 class NavigationBar extends StatefulWidget {
   @override
@@ -27,8 +28,16 @@ class _NavigationBarState extends State<NavigationBar> {
     });
   }
 
+  void _initApp(BuildContext context) {
+    ScreenUtils.screenWidth = MediaQuery.of(context).size.width;
+    ScreenUtils.screenHeight = MediaQuery.of(context).size.height;
+    ScreenUtils.safeTopPadding = MediaQuery.of(context).padding.top.toDouble(); // 刘海屏适配
+  }
+
   @override
   Widget build(BuildContext context) {
+    _initApp(context);
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

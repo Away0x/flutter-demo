@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 class SearchBar extends StatelessWidget {
 
   final bool isEnable;
+  final double width;
   final void Function(String value) onSubmit;
 
   SearchBar({
     Key key,
     this.onSubmit,
     this.isEnable = true,
+    this.width = 300,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: width,
       height: 32,
       child: TextField(
         enabled: isEnable,

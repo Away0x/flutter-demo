@@ -1,9 +1,13 @@
+import 'package:douban_movie/components/jump_route/jump_route.dart';
+import 'package:douban_movie/pages/search/search_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:douban_movie/components/search_bar/search_bar.dart';
 import 'package:douban_movie/base/root_page.dart';
 import 'package:douban_movie/model/douban.dart';
 import 'package:douban_movie/pages/category/category_page.dart';
+import 'package:douban_movie/components/recomment_item/recomment_item.dart';
+import 'package:douban_movie/utils/screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -41,10 +45,27 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildBottomWidget() {
     return Positioned(
-      top: 150,
+      top: 102,
       child: Container(
-        width: 300,
-        height: 500,
+        width: ScreenUtils.screenWidth,
+        height: ScreenUtils.screenHeight - 102,
+        child: ListView(
+          padding: EdgeInsets.zero, // scrollview 包裹 listview 会自带 padding，需要去掉
+          children: <Widget>[
+            RecommentItem(
+              context: context,
+              category: DoubanCategory.Movie,
+            ),
+            RecommentItem(
+              context: context,
+              category: DoubanCategory.Book,
+            ),
+            RecommentItem(
+              context: context,
+              category: DoubanCategory.Music,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -71,9 +92,9 @@ class _HomePageState extends State<HomePage> {
 
   void _onSearchBarTapped() {
     // Navigator.pushNamed(context, '/search');
-    Navigator.push(context, MaterialPageRoute(
+    Navigator.push(context, JumpRoute(
       builder: (context) {
-        return CategoryPage(category: DoubanCategory.Movie);
+        return SearchPage();
       },
     ));
   }
