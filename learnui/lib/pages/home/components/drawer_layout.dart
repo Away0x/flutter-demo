@@ -1,11 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:learnui/layouts/home/drawer.dart';
-import 'package:learnui/styles/theme.dart';
+import 'package:learnui/constants/drawer.dart';
+import 'package:learnui/constants/theme.dart';
 
-class HomeLayout extends StatefulWidget {
-  const HomeLayout({
+import 'drawer_content.dart';
+
+class DrawerLayout extends StatefulWidget {
+  const DrawerLayout({
     Key? key,
     this.drawerWidth = 250,
     this.onDrawerCall,
@@ -25,10 +25,11 @@ class HomeLayout extends StatefulWidget {
   final DrawerIndex? screenIndex;
 
   @override
-  _HomeLayoutState createState() => _HomeLayoutState();
+  _DrawerLayoutState createState() => _DrawerLayoutState();
 }
 
-class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
+class _DrawerLayoutState extends State<DrawerLayout>
+    with TickerProviderStateMixin {
   ScrollController? scrollController;
   AnimationController? iconAnimationController;
   AnimationController? animationController;
@@ -45,6 +46,7 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
         duration: const Duration(milliseconds: 0), curve: Curves.fastOutSlowIn);
     scrollController =
         ScrollController(initialScrollOffset: widget.drawerWidth);
+
     scrollController!.addListener(() {
       if (scrollController!.offset <= 0) {
         if (!isOpen) {
@@ -101,33 +103,10 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width + widget.drawerWidth,
-          // width: MediaQuery.of(context).size.width,
+          // MediaQuery.of(context).width,
           child: Row(
             children: [
-              SizedBox(
-                width: widget.drawerWidth,
-                height: MediaQuery.of(context).size.height,
-                child: AnimatedBuilder(
-                  animation: iconAnimationController!,
-                  builder: (context, child) {
-                    return Transform(
-                      transform: Matrix4.translationValues(
-                          scrollController!.offset, 0.0, 0.0),
-                      child: HomeDrawer(
-                        screenIndex: widget.screenIndex ?? DrawerIndex.home,
-                        iconAnimationController: iconAnimationController,
-                        callBackIndex: (DrawerIndex indexType) {
-                          onDrawerClick();
-                          try {
-                            widget.onDrawerCall!(indexType);
-                            // ignore: empty_catches
-                          } catch (e) {}
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
+              buildDrawer(context),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -136,62 +115,94 @@ class _HomeLayoutState extends State<HomeLayout> with TickerProviderStateMixin {
                     color: AppTheme.white,
                     boxShadow: [
                       BoxShadow(
-                          color: AppTheme.grey.withOpacity(0.6),
-                          blurRadius: 24),
-                    ],
-                  ),
-                  child: Stack(
-                    children: [
-                      // 当抽屉打开时, 内容忽略事件
-                      IgnorePointer(
-                        ignoring: isOpen || false,
-                        child: widget.screenView,
-                      ),
-                      // 抽屉打开时, 用于捕获内容区域的点击事件
-                      if (isOpen)
-                        InkWell(
-                          onTap: () {
-                            onDrawerClick();
-                          },
-                        ),
-                      // 打开关闭抽屉的按钮
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).padding.top + 8,
-                            left: 8),
-                        child: SizedBox(
-                          width: AppBar().preferredSize.height - 8,
-                          height: AppBar().preferredSize.height - 8,
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(
-                                  AppBar().preferredSize.height),
-                              child: Center(
-                                // if you use your own menu view UI you add form initialization
-                                child: widget.menuView ??
-                                    AnimatedIcon(
-                                        icon: widget.animatedIconData ??
-                                            AnimatedIcons.arrow_menu,
-                                        progress: iconAnimationController!),
-                              ),
-                              onTap: () {
-                                // 获取焦点
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                onDrawerClick();
-                              },
-                            ),
-                          ),
-                        ),
+                        color: AppTheme.grey.withOpacity(0.6),
+                        blurRadius: 24,
                       ),
                     ],
                   ),
+                  child: buildScreen(context),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildScreen(BuildContext context) {
+    return Stack(
+      children: [
+        // 当抽屉打开时, 内容忽略事件
+        IgnorePointer(
+          ignoring: isOpen || false,
+          child: widget.screenView,
+        ),
+        // 抽屉打开时, 用于捕获内容区域的点击事件
+        if (isOpen)
+          InkWell(
+            onTap: () {
+              onDrawerClick();
+            },
+          ),
+        // 打开关闭抽屉的按钮
+        buildActionButton(context),
+      ],
+    );
+  }
+
+  Padding buildActionButton(BuildContext context) {
+    return Padding(
+      padding:
+          EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8, left: 8),
+      child: SizedBox(
+        width: AppBar().preferredSize.height - 8,
+        height: AppBar().preferredSize.height - 8,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppBar().preferredSize.height),
+            child: Center(
+              // if you use your own menu view UI you add form initialization
+              child: widget.menuView ??
+                  AnimatedIcon(
+                      icon: widget.animatedIconData ?? AnimatedIcons.arrow_menu,
+                      progress: iconAnimationController!),
+            ),
+            onTap: () {
+              // 获取焦点
+              FocusScope.of(context).requestFocus(FocusNode());
+              onDrawerClick();
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildDrawer(BuildContext context) {
+    return SizedBox(
+      width: widget.drawerWidth,
+      height: MediaQuery.of(context).size.height,
+      child: AnimatedBuilder(
+        animation: iconAnimationController!,
+        builder: (context, child) {
+          return Transform(
+            transform:
+                Matrix4.translationValues(scrollController!.offset, 0.0, 0.0),
+            child: DrawerContent(
+              screenIndex: widget.screenIndex ?? DrawerIndex.home,
+              iconAnimationController: iconAnimationController,
+              callBackIndex: (DrawerIndex indexType) {
+                onDrawerClick();
+                try {
+                  widget.onDrawerCall!(indexType);
+                  // ignore: empty_catches
+                } catch (e) {}
+              },
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:learnui/pages/root.dart';
-import 'package:learnui/styles/styles.dart';
+import 'package:get/get.dart';
+import 'package:learnui/pages/home/home.dart';
+import 'package:learnui/constants/theme.dart';
 
 void main() async {
   await initSystemUI();
@@ -17,8 +15,9 @@ Future<void> initSystemUI() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness:
-        !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+    statusBarBrightness: !GetPlatform.isWeb && GetPlatform.isAndroid
+        ? Brightness.dark
+        : Brightness.light,
     systemNavigationBarColor: Colors.black,
     systemNavigationBarDividerColor: Colors.transparent,
     systemNavigationBarIconBrightness: Brightness.dark,
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: const RootPage(),
+      home: const HomePage(),
     );
   }
 }
