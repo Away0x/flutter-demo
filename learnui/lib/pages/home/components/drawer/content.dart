@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:learnui/constants/drawer.dart';
 import 'package:learnui/constants/theme.dart';
 
@@ -20,12 +21,12 @@ class DrawerList {
 }
 
 class DrawerContent extends StatefulWidget {
-  const DrawerContent(
-      {Key? key,
-      this.screenIndex,
-      this.iconAnimationController,
-      this.callBackIndex})
-      : super(key: key);
+  const DrawerContent({
+    Key? key,
+    this.screenIndex,
+    this.iconAnimationController,
+    this.callBackIndex,
+  }) : super(key: key);
 
   final AnimationController? iconAnimationController;
   final DrawerIndex? screenIndex;
@@ -194,7 +195,7 @@ class _DrawerContentState extends State<DrawerContent> {
           },
         ),
         SizedBox(
-          height: MediaQuery.of(context).padding.bottom,
+          height: Get.mediaQuery.padding.bottom,
         )
       ],
     );
@@ -268,7 +269,7 @@ class _DrawerContentState extends State<DrawerContent> {
                     builder: (BuildContext context, Widget? child) {
                       return Transform(
                         transform: Matrix4.translationValues(
-                            (MediaQuery.of(context).size.width * 0.75 - 64) *
+                            (Get.width * 0.75 - 64) *
                                 (1.0 -
                                     widget.iconAnimationController!.value -
                                     1.0),
@@ -277,8 +278,7 @@ class _DrawerContentState extends State<DrawerContent> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 8, bottom: 8),
                           child: Container(
-                            width:
-                                MediaQuery.of(context).size.width * 0.75 - 64,
+                            width: Get.width * 0.75 - 64,
                             height: 46,
                             decoration: BoxDecoration(
                               color: Colors.blue.withOpacity(0.2),

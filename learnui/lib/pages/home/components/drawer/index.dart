@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:learnui/constants/drawer.dart';
 import 'package:learnui/constants/theme.dart';
 
-import 'drawer_content.dart';
+import 'content.dart';
 
 class DrawerLayout extends StatefulWidget {
   const DrawerLayout({
@@ -101,15 +102,14 @@ class _DrawerLayoutState extends State<DrawerLayout>
         scrollDirection: Axis.horizontal,
         physics: const PageScrollPhysics(parent: ClampingScrollPhysics()),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width + widget.drawerWidth,
-          // MediaQuery.of(context).width,
+          height: Get.height,
+          width: Get.width + widget.drawerWidth,
           child: Row(
             children: [
               buildDrawer(context),
               SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                width: Get.width,
+                height: Get.height,
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppTheme.white,
@@ -141,9 +141,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
         // 抽屉打开时, 用于捕获内容区域的点击事件
         if (isOpen)
           InkWell(
-            onTap: () {
-              onDrawerClick();
-            },
+            onTap: () => onDrawerClick(),
           ),
         // 打开关闭抽屉的按钮
         buildActionButton(context),
@@ -153,8 +151,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
 
   Padding buildActionButton(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8, left: 8),
+      padding: EdgeInsets.only(top: Get.mediaQuery.padding.top + 8, left: 8),
       child: SizedBox(
         width: AppBar().preferredSize.height - 8,
         height: AppBar().preferredSize.height - 8,
@@ -183,7 +180,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
   Widget buildDrawer(BuildContext context) {
     return SizedBox(
       width: widget.drawerWidth,
-      height: MediaQuery.of(context).size.height,
+      height: Get.height,
       child: AnimatedBuilder(
         animation: iconAnimationController!,
         builder: (context, child) {
@@ -197,8 +194,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
                 onDrawerClick();
                 try {
                   widget.onDrawerCall!(indexType);
-                  // ignore: empty_catches
-                } catch (e) {}
+                } catch (_) {}
               },
             ),
           );

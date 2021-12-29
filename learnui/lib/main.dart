@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:learnui/pages/home/home.dart';
 import 'package:learnui/constants/theme.dart';
+import 'package:learnui/pages/pages.dart';
 
 void main() async {
   await initSystemUI();
@@ -37,12 +37,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
+      enableLog: true,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: const HomePage(),
+      initialRoute: Pages.initial,
+      getPages: Pages.routes,
     );
   }
 }
