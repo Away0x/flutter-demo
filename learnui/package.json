@@ -1,0 +1,16 @@
+{
+  "name": "learnui",
+  "version": "1.0.0",
+  "description": "> 学习 best_flutter_ui_templates",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "build:android": "flutter build apk",
+    "build:ios": "flutter build ios"
+  },
+  "author": "",
+  "license": "ISC"
+}

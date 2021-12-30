@@ -16,7 +16,8 @@
 - InkWell
 - Divider
 - Material
-- ClipRRect
+- ClipRRect: 将 child 剪裁为圆角矩形
+- ClipRect: 将 child 剪裁为给定的矩形大小
 - AnimatedBuilder
 - Transform
 - ScaleTransition
@@ -25,3 +26,4 @@
 - Icon
 - AnimatedIcon
 - FutureBuilder
+- SlideTransition: 平移动画
