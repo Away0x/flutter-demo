@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:learnui/constants/theme.dart';
 import 'package:learnui/pages/pages.dart';
+import 'package:learnui/tools/keyboard.dart';
 
 void main() async {
   await initSystemUI();
@@ -45,6 +46,15 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: Pages.initial,
       getPages: Pages.routes,
+      builder: (context, child) => Scaffold(
+        // Global GestureDetector that will dismiss the keyboard
+        body: GestureDetector(
+          onTap: () {
+            KeyboardTools.hideKeyboard(context);
+          },
+          child: child,
+        ),
+      ),
     );
   }
 }

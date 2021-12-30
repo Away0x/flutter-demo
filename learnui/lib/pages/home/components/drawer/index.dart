@@ -71,7 +71,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
           curve: Curves.fastOutSlowIn,
         );
       } else {
-        if (!isOpen) {
+        if (isOpen) {
           setState(() {
             isOpen = false;
             try {
@@ -109,7 +109,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
           width: Get.width + widget.drawerWidth,
           child: Row(
             children: [
-              buildDrawer(context),
+              _buildDrawer(context),
               SizedBox(
                 width: Get.width,
                 height: Get.height,
@@ -123,7 +123,23 @@ class _DrawerLayoutState extends State<DrawerLayout>
                       ),
                     ],
                   ),
-                  child: buildScreen(context),
+                  // 内容区域
+                  child: Stack(
+                    children: [
+                      // 当抽屉打开时, 内容忽略事件
+                      IgnorePointer(
+                        ignoring: isOpen || false,
+                        child: widget.screenView,
+                      ),
+                      // 抽屉打开时, 用于捕获内容区域的点击事件
+                      if (isOpen)
+                        InkWell(
+                          onTap: () => onDrawerClick(),
+                        ),
+                      // 打开关闭抽屉的按钮
+                      _buildActionButton(context),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -133,26 +149,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
     );
   }
 
-  Widget buildScreen(BuildContext context) {
-    return Stack(
-      children: [
-        // 当抽屉打开时, 内容忽略事件
-        IgnorePointer(
-          ignoring: isOpen || false,
-          child: widget.screenView,
-        ),
-        // 抽屉打开时, 用于捕获内容区域的点击事件
-        if (isOpen)
-          InkWell(
-            onTap: () => onDrawerClick(),
-          ),
-        // 打开关闭抽屉的按钮
-        buildActionButton(context),
-      ],
-    );
-  }
-
-  Padding buildActionButton(BuildContext context) {
+  Padding _buildActionButton(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: Get.mediaQuery.padding.top + 8, left: 8),
       child: SizedBox(
@@ -180,7 +177,7 @@ class _DrawerLayoutState extends State<DrawerLayout>
     );
   }
 
-  Widget buildDrawer(BuildContext context) {
+  Widget _buildDrawer(BuildContext context) {
     return SizedBox(
       width: widget.drawerWidth,
       height: Get.height,

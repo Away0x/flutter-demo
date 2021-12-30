@@ -44,16 +44,6 @@ class _DrawerContentState extends State<DrawerContent> {
       labelName: 'Invite Friend',
       icon: const Icon(Icons.group),
     ),
-    DrawerListItem(
-      index: DrawerIndex.share,
-      labelName: 'Rate the app',
-      icon: const Icon(Icons.share),
-    ),
-    DrawerListItem(
-      index: DrawerIndex.about,
-      labelName: 'About Us',
-      icon: const Icon(Icons.info),
-    ),
   ];
 
   @override
@@ -64,7 +54,7 @@ class _DrawerContentState extends State<DrawerContent> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildUserInfo(),
+          _buildUserInfo(),
           const SizedBox(
             height: 4,
           ),
@@ -78,7 +68,7 @@ class _DrawerContentState extends State<DrawerContent> {
               padding: const EdgeInsets.all(0.0),
               itemCount: drawerList.length,
               itemBuilder: (BuildContext context, int index) {
-                return buildMenuItem(drawerList[index]);
+                return _buildMenuItem(drawerList[index]);
               },
             ),
           ),
@@ -86,13 +76,13 @@ class _DrawerContentState extends State<DrawerContent> {
             height: 1,
             color: AppTheme.grey.withOpacity(0.6),
           ),
-          buildBottom(context),
+          _buildBottom(context),
         ],
       ),
     );
   }
 
-  Widget buildUserInfo() {
+  Widget _buildUserInfo() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(top: 40.0),
@@ -157,7 +147,7 @@ class _DrawerContentState extends State<DrawerContent> {
     );
   }
 
-  Widget buildBottom(BuildContext context) {
+  Widget _buildBottom(BuildContext context) {
     return Column(
       children: [
         ListTile(
@@ -186,15 +176,7 @@ class _DrawerContentState extends State<DrawerContent> {
     );
   }
 
-  void onTapped() {
-    debugPrint('Doing Something...');
-  }
-
-  Future<void> navigationtoScreen(DrawerIndex indexScreen) async {
-    widget.callBackIndex!(indexScreen);
-  }
-
-  Widget buildMenuItem(DrawerListItem itemData) {
+  Widget _buildMenuItem(DrawerListItem itemData) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -282,5 +264,13 @@ class _DrawerContentState extends State<DrawerContent> {
         ),
       ),
     );
+  }
+
+  void onTapped() {
+    debugPrint('Doing Something...');
+  }
+
+  Future<void> navigationtoScreen(DrawerIndex indexScreen) async {
+    widget.callBackIndex!(indexScreen);
   }
 }
