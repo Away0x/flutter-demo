@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:learnui/constants/app.dart';
 import 'package:learnui/constants/theme.dart';
 import 'package:learnui/pages/pages.dart';
 import 'package:learnui/tools/keyboard.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter UI',
+      title: AppInfo.title,
       debugShowCheckedModeBanner: false,
       enableLog: true,
       theme: ThemeData(

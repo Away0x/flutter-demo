@@ -89,6 +89,14 @@ class _DrawerLayoutState extends State<DrawerLayout>
     super.initState();
   }
 
+  @override
+  void dispose() {
+    scrollController?.dispose();
+    iconAnimationController?.dispose();
+    animationController?.dispose();
+    super.dispose();
+  }
+
   Future<bool> getInitState() async {
     scrollController?.jumpTo(
       widget.drawerWidth,

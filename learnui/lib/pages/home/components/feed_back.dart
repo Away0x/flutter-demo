@@ -103,7 +103,7 @@ class FeedBack extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppTheme.white,
           borderRadius: BorderRadius.circular(8),
-          boxShadow: <BoxShadow>[
+          boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.8),
                 offset: const Offset(4, 4),

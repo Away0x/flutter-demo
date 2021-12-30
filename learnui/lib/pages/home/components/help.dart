@@ -54,7 +54,7 @@ class Help extends StatelessWidget {
                         color: Colors.blue,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(4.0)),
-                        boxShadow: <BoxShadow>[
+                        boxShadow: [
                           BoxShadow(
                               color: Colors.grey.withOpacity(0.6),
                               offset: const Offset(4, 4),
