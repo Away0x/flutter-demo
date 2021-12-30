@@ -58,15 +58,18 @@ class _DrawerLayoutState extends State<DrawerLayout>
             } catch (_) {}
           });
         }
-        iconAnimationController?.animateTo(0.0,
-            duration: const Duration(milliseconds: 0),
-            curve: Curves.fastOutSlowIn);
+        iconAnimationController?.animateTo(
+          0.0,
+          duration: const Duration(milliseconds: 0),
+          curve: Curves.fastOutSlowIn,
+        );
       } else if (scrollController!.offset > 0 &&
           scrollController!.offset < widget.drawerWidth.floor()) {
         iconAnimationController?.animateTo(
-            (scrollController!.offset * 100 / (widget.drawerWidth)) / 100,
-            duration: const Duration(milliseconds: 0),
-            curve: Curves.fastOutSlowIn);
+          (scrollController!.offset * 100 / (widget.drawerWidth)) / 100,
+          duration: const Duration(milliseconds: 0),
+          curve: Curves.fastOutSlowIn,
+        );
       } else {
         if (!isOpen) {
           setState(() {

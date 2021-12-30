@@ -1,24 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:learnui/constants/drawer.dart';
 import 'package:learnui/constants/theme.dart';
 
-class DrawerList {
-  DrawerList({
-    this.isAssetsImage = false,
-    this.labelName = '',
-    this.icon,
-    this.index,
-    this.imageName = '',
-  });
-
-  String labelName;
-  Icon? icon;
-  bool isAssetsImage;
-  String imageName;
-  DrawerIndex? index;
-}
+import 'models.dart';
 
 class DrawerContent extends StatefulWidget {
   const DrawerContent({
@@ -37,34 +22,34 @@ class DrawerContent extends StatefulWidget {
 }
 
 class _DrawerContentState extends State<DrawerContent> {
-  List<DrawerList> drawerList = [
-    DrawerList(
+  List<DrawerListItem> drawerList = [
+    DrawerListItem(
       index: DrawerIndex.home,
       labelName: 'Home',
       icon: const Icon(Icons.home),
     ),
-    DrawerList(
+    DrawerListItem(
       index: DrawerIndex.help,
       labelName: 'Help',
       isAssetsImage: true,
       imageName: 'assets/images/supportIcon.png',
     ),
-    DrawerList(
+    DrawerListItem(
       index: DrawerIndex.feedBack,
       labelName: 'FeedBack',
       icon: const Icon(Icons.help),
     ),
-    DrawerList(
+    DrawerListItem(
       index: DrawerIndex.invite,
       labelName: 'Invite Friend',
       icon: const Icon(Icons.group),
     ),
-    DrawerList(
+    DrawerListItem(
       index: DrawerIndex.share,
       labelName: 'Rate the app',
       icon: const Icon(Icons.share),
     ),
-    DrawerList(
+    DrawerListItem(
       index: DrawerIndex.about,
       labelName: 'About Us',
       icon: const Icon(Icons.info),
@@ -202,23 +187,21 @@ class _DrawerContentState extends State<DrawerContent> {
   }
 
   void onTapped() {
-    if (kDebugMode) {
-      print('Doing Something...');
-    } // Print to console.
+    debugPrint('Doing Something...');
   }
 
   Future<void> navigationtoScreen(DrawerIndex indexScreen) async {
     widget.callBackIndex!(indexScreen);
   }
 
-  Widget buildMenuItem(DrawerList listData) {
+  Widget buildMenuItem(DrawerListItem itemData) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         splashColor: Colors.grey.withOpacity(0.1),
         highlightColor: Colors.transparent,
         onTap: () {
-          navigationtoScreen(listData.index!);
+          navigationtoScreen(itemData.index);
         },
         child: Stack(
           children: [
@@ -233,28 +216,28 @@ class _DrawerContentState extends State<DrawerContent> {
                   const Padding(
                     padding: EdgeInsets.all(4.0),
                   ),
-                  listData.isAssetsImage
+                  itemData.isAssetsImage
                       ? SizedBox(
                           width: 24,
                           height: 24,
-                          child: Image.asset(listData.imageName,
-                              color: widget.screenIndex == listData.index
+                          child: Image.asset(itemData.imageName,
+                              color: widget.screenIndex == itemData.index
                                   ? Colors.blue
                                   : AppTheme.nearlyBlack),
                         )
-                      : Icon(listData.icon?.icon,
-                          color: widget.screenIndex == listData.index
+                      : Icon(itemData.icon?.icon,
+                          color: widget.screenIndex == itemData.index
                               ? Colors.blue
                               : AppTheme.nearlyBlack),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
                   ),
                   Text(
-                    listData.labelName,
+                    itemData.labelName,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
-                      color: widget.screenIndex == listData.index
+                      color: widget.screenIndex == itemData.index
                           ? Colors.blue
                           : AppTheme.nearlyBlack,
                     ),
@@ -263,7 +246,7 @@ class _DrawerContentState extends State<DrawerContent> {
                 ],
               ),
             ),
-            widget.screenIndex == listData.index
+            widget.screenIndex == itemData.index
                 ? AnimatedBuilder(
                     animation: widget.iconAnimationController!,
                     builder: (BuildContext context, Widget? child) {

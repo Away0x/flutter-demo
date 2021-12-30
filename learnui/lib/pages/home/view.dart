@@ -17,14 +17,18 @@ class HomePage extends GetView<HomeController> {
         bottom: false,
         child: Scaffold(
           backgroundColor: AppTheme.nearlyWhite,
-          body: Obx(() => DrawerLayout(
-                screenIndex: controller.drawerIndex.value,
+          body: GetBuilder<HomeController>(
+            builder: (controller) {
+              return DrawerLayout(
+                screenIndex: controller.drawerIndex,
                 drawerWidth: Get.width * 0.75, // 抽屉宽度占屏幕 0.75
                 screenView: controller.screenView,
                 onDrawerCall: (drawerIndex) {
                   controller.changeIndex(drawerIndex);
                 },
-              )),
+              );
+            },
+          ),
         ),
       ),
     );

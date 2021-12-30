@@ -21,7 +21,7 @@ var screenMap = {
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
 
-  final drawerIndex = DrawerIndex.home.obs;
+  DrawerIndex drawerIndex = DrawerIndex.home;
   Widget? screenView;
 
   @override
@@ -31,9 +31,11 @@ class HomeController extends GetxController {
   }
 
   void changeIndex(DrawerIndex drawerIndexdata) {
-    if (drawerIndexdata.index == drawerIndex.value.index) return;
+    if (drawerIndexdata == drawerIndex) return;
     var buildFn = screenMap[drawerIndexdata];
-    if (buildFn != null) screenView = buildFn();
-    drawerIndex.value = drawerIndexdata;
+    if (buildFn == null) return;
+    screenView = buildFn();
+    drawerIndex = drawerIndexdata;
+    update();
   }
 }
