@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:learnui/constants/app.dart';
 import 'package:learnui/constants/theme.dart';
@@ -47,15 +48,25 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: Pages.initial,
       getPages: Pages.routes,
-      builder: (context, child) => Scaffold(
-        // Global GestureDetector that will dismiss the keyboard
-        body: GestureDetector(
-          onTap: () {
-            KeyboardTools.hideKeyboard(context);
-          },
-          child: child,
-        ),
-      ),
+      builder: (context, child) {
+        ScreenUtil.init(
+          BoxConstraints(
+            maxWidth: Get.width,
+            maxHeight: Get.height,
+          ),
+          designSize: const Size(375, 812), // design by iphonex
+        );
+
+        return Scaffold(
+          // Global GestureDetector that will dismiss the keyboard
+          body: GestureDetector(
+            onTap: () {
+              KeyboardTools.hideKeyboard(context);
+            },
+            child: child,
+          ),
+        );
+      },
     );
   }
 }
