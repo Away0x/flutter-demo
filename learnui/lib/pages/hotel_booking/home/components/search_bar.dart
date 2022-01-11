@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:learnui/pages/hotel_booking/theme.dart';
 import 'package:learnui/tools/keyboard.dart';
 
 class SearchBar extends StatefulWidget {
-  const SearchBar({Key? key}) : super(key: key);
+  const SearchBar({
+    Key? key,
+    this.onSearch,
+  }) : super(key: key);
+
+  final ValueChanged<String>? onSearch;
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -83,8 +87,7 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 onTap: () {
                   KeyboardTools.hideKeyboard(context);
-                  Get.defaultDialog(
-                      middleText: 'Search: ${_tfController.text}');
+                  widget.onSearch?.call(_tfController.text);
                   _tfController.text = '';
                 },
                 child: Padding(

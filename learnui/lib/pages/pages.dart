@@ -15,16 +15,26 @@ class Pages {
       binding: HomeBinding(),
       page: () => const HomePage(),
     ),
+
     GetPage(
       name: Routes.introductionAnimation,
       binding: IntroductionAnimationBinding(),
       page: () => const IntroductionAnimationPage(),
     ),
+
+    // ---------- HotelBooking ----------
     GetPage(
       name: Routes.hotelBooking,
-      binding: HotelBookingBinding(),
-      page: () => const HotelBookingPage(),
+      binding: HotelBookingHomeBinding(),
+      page: () => const HotelBookingHome(),
     ),
+    GetPage(
+      name: Routes.hotelBookingFilter,
+      binding: HotelBookingFilterBinding(),
+      page: () => const HotelBookingFilterPage(),
+      fullscreenDialog: true,
+    ),
+
     GetPage(
       name: Routes.fitness,
       binding: FitnessBinding(),

@@ -15,6 +15,7 @@ dependencies:
   animations: ^2.0.2
   flutter_screenutil: ^5.0.2
   font_awesome_flutter: ^9.2.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

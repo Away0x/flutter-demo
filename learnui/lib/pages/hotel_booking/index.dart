@@ -1,4 +1,6 @@
 library hotel_booking;
 
-export 'view.dart';
-export 'binding.dart';
+export 'home/view.dart';
+export 'home/binding.dart';
+export 'filter/view.dart';
+export 'filter/binding.dart';
