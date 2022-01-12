@@ -1,10 +1,10 @@
 import 'package:get/route_manager.dart';
 import 'package:learnui/constants/routes.dart';
+import 'package:learnui/pages/home/index.dart';
+import 'package:learnui/pages/introduction_animation/index.dart';
+import 'package:learnui/pages/hotel_booking/index.dart';
 import 'package:learnui/pages/design_course/index.dart';
 import 'package:learnui/pages/fitness/index.dart';
-import 'package:learnui/pages/home/index.dart';
-import 'package:learnui/pages/hotel_booking/index.dart';
-import 'package:learnui/pages/introduction_animation/index.dart';
 
 class Pages {
   static const initial = Routes.home;
@@ -40,10 +40,17 @@ class Pages {
       binding: FitnessBinding(),
       page: () => const FitnessPage(),
     ),
+
+    // ---------- DesignCourse ----------
     GetPage(
       name: Routes.designCourse,
-      binding: DesignCourseBinding(),
-      page: () => const DesignCoursePage(),
+      binding: DesignCourseHomeBinding(),
+      page: () => const DesignCourseHomePage(),
+    ),
+    GetPage(
+      name: Routes.designCourseInfo,
+      binding: DesignCourseInfoBinding(),
+      page: () => const DesignCourseInfoPage(),
     ),
   ];
 }

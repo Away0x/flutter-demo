@@ -5,4 +5,5 @@ abstract class Routes {
   static const hotelBookingFilter = '${Routes.hotelBooking}/filter';
   static const fitness = '/fitness';
   static const designCourse = '/designCourse';
+  static const designCourseInfo = '${Routes.designCourse}/info';
 }

@@ -1,4 +1,6 @@
 library design_course;
 
-export 'view.dart';
-export 'binding.dart';
+export 'home/view.dart';
+export 'home/binding.dart';
+export 'info/view.dart';
+export 'info/binding.dart';

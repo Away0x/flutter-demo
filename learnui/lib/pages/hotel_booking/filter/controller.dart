@@ -11,12 +11,14 @@ class HotelBookingFilterController extends GetxController {
   final accomodationListData = PopularFilterListData.accomodationList;
   final accomodationBuildKey = 'Accomodation';
 
-  final rangeValues = const RangeValues(100, 600).obs;
-  final distValue = 50.0.obs;
+  RangeValues get rangeValues => _rangeValues.value;
+  final _rangeValues = const RangeValues(100, 600).obs;
+  double get distValue => _distValue.value;
+  final _distValue = 50.0.obs;
 
-  void changeRangeValues(RangeValues v) => rangeValues.value = v;
+  void changeRangeValues(RangeValues v) => _rangeValues.value = v;
 
-  void changeDistValue(double v) => distValue.value = v;
+  void changeDistValue(double v) => _distValue.value = v;
 
   void changePopularSelect(PopularFilterListData date) {
     date.isSelected = !date.isSelected;

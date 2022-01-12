@@ -65,7 +65,7 @@ class HotelBookingFilterPage extends GetView<HotelBookingFilterController> {
         ),
         Obx(
           () => MyRangeSlider(
-            values: controller.rangeValues.value,
+            values: controller.rangeValues,
             onChangeRangeValues: (v) {
               controller.changeRangeValues(v);
             },
@@ -195,7 +195,7 @@ class HotelBookingFilterPage extends GetView<HotelBookingFilterController> {
         ),
         Obx(
           () => MySlider(
-            distValue: controller.distValue.value,
+            distValue: controller.distValue,
             onChangedistValue: (v) {
               controller.changeDistValue(v);
             },

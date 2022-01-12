@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SkipButton extends StatelessWidget {
   const SkipButton({
@@ -40,7 +41,7 @@ class SkipButton extends StatelessWidget {
     return SlideTransition(
       position: _animation,
       child: Padding(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
         child: SizedBox(
           height: 58,
           child: Padding(
