@@ -71,9 +71,7 @@ class MyRangeSlider extends StatelessWidget {
             onChanged: (v) {
               try {
                 onChangeRangeValues(v);
-              } catch (e) {
-                print(e);
-              }
+              } catch (_) {}
             },
           ),
         ),
@@ -144,14 +142,21 @@ class CustomRangeThumbShape extends RangeSliderThumbShape {
     }
 
     canvas.drawPath(
-        Path()
-          ..addOval(Rect.fromPoints(Offset(center.dx + 12, center.dy + 12),
-              Offset(center.dx - 12, center.dy - 12)))
-          ..fillType = PathFillType.evenOdd,
-        Paint()
-          ..color = Colors.black.withOpacity(0.5)
-          ..maskFilter =
-              MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(8)));
+      Path()
+        ..addOval(
+          Rect.fromPoints(
+            Offset(center.dx + 12, center.dy + 12),
+            Offset(center.dx - 12, center.dy - 12),
+          ),
+        )
+        ..fillType = PathFillType.evenOdd,
+      Paint()
+        ..color = Colors.black.withOpacity(0.5)
+        ..maskFilter = MaskFilter.blur(
+          BlurStyle.normal,
+          convertRadiusToSigma(8),
+        ),
+    );
 
     final Paint cPaint = Paint();
     cPaint.color = Colors.white;
