@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:learnui/constants/routes.dart';
+import 'package:learnui/pages/hotel_booking/home/components/hotel_list_item.dart';
 import 'package:learnui/pages/hotel_booking/theme.dart';
 
 import 'models/hotel_list_data.dart';
@@ -19,7 +20,7 @@ class HotelBookingHome extends StatefulWidget {
 
 class _HotelBookingHomeState extends State<HotelBookingHome>
     with TickerProviderStateMixin {
-  AnimationController? animationController;
+  late AnimationController animationController;
   List<HotelListData> hotelList = HotelListData.hotelList;
   final ScrollController _scrollController = ScrollController();
 
@@ -35,7 +36,7 @@ class _HotelBookingHomeState extends State<HotelBookingHome>
 
   @override
   void dispose() {
-    animationController?.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -58,52 +59,81 @@ class _HotelBookingHomeState extends State<HotelBookingHome>
               },
             ),
             Expanded(
-                child: NestedScrollView(
-              controller: _scrollController,
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return Column(
-                          children: [
-                            SearchBar(
-                              onSearch: (text) {
-                                Get.defaultDialog(middleText: 'Search: $text');
-                              },
-                            ),
-                            TimeBar(
-                              startDate: startDate,
-                              endDate: endDate,
-                              onChooseDate: () {
-                                showDemoDialog();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                      childCount: 1,
+              child: NestedScrollView(
+                controller: _scrollController,
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          return Column(
+                            children: [
+                              SearchBar(
+                                onSearch: (text) {
+                                  Get.defaultDialog(
+                                      middleText: 'Search: $text');
+                                },
+                              ),
+                              TimeBar(
+                                startDate: startDate,
+                                endDate: endDate,
+                                onChooseDate: () {
+                                  showDemoDialog();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        childCount: 1,
+                      ),
                     ),
+                    SliverPersistentHeader(
+                      pinned: true, // 是否固定头布局
+                      floating: true, // 是否浮动头布局
+                      // delegate: 设置布局
+                      delegate: ContestTabHeader(FilterBar(
+                        onFilter: () {
+                          Get.toNamed(Routes.hotelBookingFilter);
+                        },
+                      )),
+                    ),
+                  ];
+                },
+                body: Container(
+                  color: HotelBookingTheme.buildLightTheme().backgroundColor,
+                  child: ListView.builder(
+                    itemCount: hotelList.length,
+                    padding: const EdgeInsets.only(top: 8),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      final int count =
+                          hotelList.length > 10 ? 10 : hotelList.length;
+                      final animation = Tween(begin: 0.0, end: 1.0).animate(
+                        CurvedAnimation(
+                          parent: animationController,
+                          curve: Interval(
+                            (1 / count) * index,
+                            1.0,
+                            curve: Curves.fastOutSlowIn,
+                          ),
+                        ),
+                      );
+
+                      animationController.forward();
+
+                      return HotelListItem(
+                        hotelData: hotelList[index],
+                        animation: animation,
+                        animationController: animationController,
+                        onTap: (itemData) {
+                          Get.snackbar(itemData.titleTxt, itemData.subTxt);
+                        },
+                      );
+                    },
                   ),
-                  SliverPersistentHeader(
-                    pinned: true, // 是否固定头布局
-                    floating: true, // 是否浮动头布局
-                    // delegate: 设置布局
-                    delegate: ContestTabHeader(FilterBar(
-                      onFilter: () {
-                        Get.toNamed(Routes.hotelBookingFilter);
-                      },
-                    )),
-                  ),
-                ];
-              },
-              body: Container(
-                color: HotelBookingTheme.buildLightTheme().backgroundColor,
-                child: const Center(
-                  child: Text('body'),
                 ),
               ),
-            ))
+            )
           ],
         ),
       ),
