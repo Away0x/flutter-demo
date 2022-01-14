@@ -15,6 +15,7 @@
 - InkWell
 - Divider
 - AspectRatio
+- PhysicalShape
 - Material: 可以用来设置阴影
 ```dart
 Material(

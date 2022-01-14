@@ -1,4 +1,4 @@
 library fitness;
 
-export 'view.dart';
-export 'binding.dart';
+export 'home/view.dart';
+export 'home/binding.dart';
