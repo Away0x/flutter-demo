@@ -65,11 +65,6 @@ class _MyDiaryState extends State<MyDiary> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            MyAppBar(
-              title: 'My Diary',
-              animationController: widget.animationController,
-              opacity: topBarOpacity,
-            ),
             FutureBuilder(
               future: _getData(),
               builder: (context, snapshot) {
@@ -91,6 +86,11 @@ class _MyDiaryState extends State<MyDiary> {
                   },
                 );
               },
+            ),
+            MyAppBar(
+              title: 'My Diary',
+              animationController: widget.animationController,
+              opacity: topBarOpacity,
             ),
             SizedBox(height: Get.mediaQuery.padding.bottom),
           ],

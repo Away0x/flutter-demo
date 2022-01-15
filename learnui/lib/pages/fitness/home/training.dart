@@ -63,11 +63,6 @@ class _TrainingState extends State<Training> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            MyAppBar(
-              title: 'Training',
-              animationController: widget.animationController,
-              opacity: topBarOpacity,
-            ),
             FutureBuilder(
               future: _getData(),
               builder: (context, snapshot) {
@@ -89,6 +84,11 @@ class _TrainingState extends State<Training> {
                   },
                 );
               },
+            ),
+            MyAppBar(
+              title: 'Training',
+              animationController: widget.animationController,
+              opacity: topBarOpacity,
             ),
             SizedBox(height: Get.mediaQuery.padding.bottom)
           ],
